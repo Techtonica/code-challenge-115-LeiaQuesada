@@ -38,7 +38,48 @@
 
 
 function cleanOutFridge(array){
-  return // your code here
-}
+  //Print out the age of each item in the fridge relative to today's date.
+  // The 'Soy milk' is 19 days beyond its expiry date.
+  // return an array containing the names of any items that are greater than 7 days past their expiry date and should be discarded.
+  
+
+  // set return array
+  let expired = [];
+  // set variable for today's date
+  let currentDate = new Date();
+  // loop through each object in array 
+  for (let product in array) {
+      // iterate through each obj's expiry date
+      for (let date in product) {
+        // check date value in object
+        let fixDate = product[date].split("-");
+        let expiryDate = [fixDate[1], fixDate[2], fixDate[0]].join(', ');
+        // convert date format 
+        let expiresOn = new Date(expiryDate)
+        // calculate the difference betwen the two dates
+        let timeDiff = currentDate.getMilliseconds() - expiresOn.getMilliseconds();
+        // convert time diff to days
+        let daysPastDue = timeDiff / (1000 * 60 * 60 * 24);
+        // if expiry date is less than current date
+        if ( daysPastDue >= 7 ) {
+          // print out age of each item in the fridge
+          console.log(`The ${product["name"]} is ${daysPastDue} days past beyond its expiry date.`);
+          expired.push(product["name"]);
+        }
+      }
+    }
+    return expired;
+}  
+
+// let items = [
+//   { name: 'Soy milk', expiryDate: '2021-01-01' },
+
+//   { name: 'Sirloin', expiryDate: '2021-01-05' },
+
+//   { name: 'Chewy lentils', expiryDate: '2021-02-28' }
+
+// ];
+
+// cleanOutFridge(items);
 
 module.exports = cleanOutFridge;
